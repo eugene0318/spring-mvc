@@ -17,18 +17,11 @@ public class MemberSaveControllerV1 implements ControllerV1 {
 	public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		int age = Integer.parseInt(request.getParameter("age"));
-		
-		System.out.println("username==="+ username);
 		Member member = new Member(username, age);
-
 		memberRepository.save(member);
-		// model에 데이터 보관
 		request.setAttribute("member", member);
-		String viewPath = "WEB-INF/views/save-result.jsp";
+		String viewPath = "/WEB-INF/views/save-result.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
-		System.out.println("3333333333333333");
 		dispatcher.forward(request, response);
-		
-		System.out.println("4444444444444444444");
 	}
 }

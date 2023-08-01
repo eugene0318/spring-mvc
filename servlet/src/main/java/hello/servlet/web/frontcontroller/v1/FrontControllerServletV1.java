@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "frontControllerServletV1", urlPatterns = "/front-controller/v1/*")
+@WebServlet(name="frontControllerServletV1",urlPatterns="/front-controller/v1/*")
 public class FrontControllerServletV1 extends HttpServlet {
 	private Map<String, ControllerV1> controllerMap = new HashMap<>();
 
@@ -29,12 +29,11 @@ public class FrontControllerServletV1 extends HttpServlet {
 		System.out.println("FrontControllerServletV1.service");
 		String requestURI = request.getRequestURI();
 		ControllerV1 controller = controllerMap.get(requestURI);
-		System.out.println("controller===="+controller);
-		if(controller == null) {
+		if (controller == null) {
+			System.out.println("nul.lllllllllllllllllllll");
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
-		
 		controller.process(request, response);
 	}
 }
