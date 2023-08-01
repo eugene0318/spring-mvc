@@ -28,6 +28,13 @@ public class FrontControllerServletV1 extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("FrontControllerServletV1.service");
 		String requestURI = request.getRequestURI();
-		ControllerV1 controllerV1 = controllerMap.get(requestURI);
+		ControllerV1 controller = controllerMap.get(requestURI);
+		System.out.println("controller===="+controller);
+		if(controller == null) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		
+		controller.process(request, response);
 	}
 }
