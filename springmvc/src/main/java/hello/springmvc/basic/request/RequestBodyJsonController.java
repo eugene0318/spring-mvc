@@ -7,9 +7,12 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,4 +35,44 @@ public class RequestBodyJsonController {
 		log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
 		response.getWriter().write("ok");
 	}
+
+	public RequestBodyJsonController() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@ResponseBody
+	@PostMapping("/request-body-json-v2")
+	public String RequestBodyJsonV2(@RequestBody String messageBody) throws IOException {
+
+		log.info("messageBody={}", messageBody);
+		HelloData helloData = objectMapper.readValue(messageBody, HelloData.class);
+
+		log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+		return "ok";
+	}
+
+	@ResponseBody
+	@PostMapping("/request-body-json-v3")
+	public String RequestBodyJsonV3(@RequestBody HelloData helloData) throws IOException {
+
+		log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+		return "ok";
+	}
+
+	@ResponseBody
+	@PostMapping("/request-body-json-v4")
+	public String RequestBodyJsonV4(HttpEntity<HelloData> data) throws IOException {
+		HelloData helloData = data.getBody();
+		log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+		return "ok";
+	}
+
+	@ResponseBody
+	@PostMapping("/request-body-json-v5")
+	public HelloData RequestBodyJsonV5(@RequestBody HelloData data) throws IOException {
+
+		log.info("username={}, age={}", data.getUsername(), data.getAge());
+		return data;
+	}
+
 }
